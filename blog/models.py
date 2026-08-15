@@ -1,0 +1,48 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class Post(models.Model):
+    POST_STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+        ('rejected', 'Rejected'),
+    )
+
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=200)
+    post_status = models.CharField(max_length=20,default='Draft',choices=POST_STATUS_CHOICES)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return self.title
+
+
+class News(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    COMMENT_STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('spam', 'Spam'),
+    )
+
+    title = models.CharField(max_length=200)
+    content = models.TextField(null=True, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    created = models.DateTimeField(auto_now_add=True)
+    comment_status = models.CharField(max_length=20, default='pending', choices=COMMENT_STATUS_CHOICES)
+
+    def __str__(self):
+        return self.title + self.author.username
