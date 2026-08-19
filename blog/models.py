@@ -1,5 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.fields import BooleanField
+from django_jalali.db import models as jmodels
+
+
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(post_status='published')
+
+
 
 class Post(models.Model):
     POST_STATUS_CHOICES = (
@@ -13,8 +22,16 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     slug = models.SlugField(max_length=200)
     post_status = models.CharField(max_length=20,default='Draft',choices=POST_STATUS_CHOICES)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = jmodels.jDateTimeField(auto_now_add=True)
+    updated = jmodels.jDateTimeField(auto_now=True)
+    selected = BooleanField(default=False)
+
+    objects = jmodels.jManager
+    published = PublishedManager
+
+    class Meta:
+        pass
+
     def __str__(self):
         return self.title
 
@@ -25,6 +42,11 @@ class News(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
+    objects = jmodels.jManager
+
+    class Meta:
+        pass
+
     def __str__(self):
         return self.title
 
@@ -32,7 +54,7 @@ class News(models.Model):
 class Comment(models.Model):
     COMMENT_STATUS_CHOICES = (
         ('pending', 'Pending'),
-        ('approved', 'Approved'),
+        ('published', 'Published'),
         ('rejected', 'Rejected'),
         ('spam', 'Spam'),
     )
@@ -43,6 +65,12 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     created = models.DateTimeField(auto_now_add=True)
     comment_status = models.CharField(max_length=20, default='pending', choices=COMMENT_STATUS_CHOICES)
+
+    objects = jmodels.jManager
+    published = PublishedManager
+
+    class Meta:
+        pass
 
     def __str__(self):
         return self.title + self.author.username
