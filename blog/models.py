@@ -21,7 +21,7 @@ class Post(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     slug = models.SlugField(max_length=200)
-    post_status = models.CharField(max_length=20,default='Draft',choices=POST_STATUS_CHOICES)
+    post_status = models.CharField(max_length=20,default='draft',choices=POST_STATUS_CHOICES)
     created = jmodels.jDateTimeField(auto_now_add=True)
     updated = jmodels.jDateTimeField(auto_now=True)
     selected = BooleanField(default=False)
