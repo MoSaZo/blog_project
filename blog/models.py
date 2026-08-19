@@ -26,8 +26,8 @@ class Post(models.Model):
     updated = jmodels.jDateTimeField(auto_now=True)
     selected = BooleanField(default=False)
 
-    objects = jmodels.jManager
-    published = PublishedManager
+    objects = jmodels.jManager()
+    published = PublishedManager()
 
     class Meta:
         pass
@@ -42,7 +42,7 @@ class News(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
-    objects = jmodels.jManager
+    objects = jmodels.jManager()
 
     class Meta:
         pass
@@ -66,8 +66,8 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     comment_status = models.CharField(max_length=20, default='pending', choices=COMMENT_STATUS_CHOICES)
 
-    objects = jmodels.jManager
-    published = PublishedManager
+    objects = jmodels.jManager()
+    published = PublishedManager()
 
     class Meta:
         pass
