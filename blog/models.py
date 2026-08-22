@@ -17,20 +17,21 @@ class Post(models.Model):
         ('rejected', 'Rejected'),
     )
 
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, verbose_name='Title')
     content = models.TextField()
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=200)
-    post_status = models.CharField(max_length=20,default='draft',choices=POST_STATUS_CHOICES)
+    author = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name='Author')
+    slug = models.SlugField(max_length=200, verbose_name='Slug')
+    post_status = models.CharField(max_length=20,default='draft',choices=POST_STATUS_CHOICES, verbose_name='Post Status')
     created = jmodels.jDateTimeField(auto_now_add=True)
     updated = jmodels.jDateTimeField(auto_now=True)
-    selected = BooleanField(default=False)
+    selected = BooleanField(default=False, verbose_name='Is Selected')
 
     objects = jmodels.jManager()
     published = PublishedManager()
 
     class Meta:
-        pass
+        verbose_name='Post'
+        verbose_name_plural='Posts'
 
     def __str__(self):
         return self.title
@@ -45,7 +46,8 @@ class News(models.Model):
     objects = jmodels.jManager()
 
     class Meta:
-        pass
+        verbose_name='New'
+        verbose_name_plural='News'
 
     def __str__(self):
         return self.title
@@ -70,7 +72,8 @@ class Comment(models.Model):
     published = PublishedManager()
 
     class Meta:
-        pass
+        verbose_name='Comment'
+        verbose_name_plural='Comments'
 
     def __str__(self):
         return self.title + self.author.username

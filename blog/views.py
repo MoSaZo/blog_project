@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    pass
+    return HttpResponse("You're in the Index.")
 
 def post_list(request):
-    pass
+    return HttpResponse("")
 
-def post_detail(request):
-    pass
+def post_detail(request, pk):
+    return HttpResponse("")
