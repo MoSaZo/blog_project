@@ -19,8 +19,8 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100, verbose_name='Title')
     content = models.TextField()
-    author = models.ForeignKey(User,on_delete=models.CASCADE, verbose_name='Author')
-    slug = models.SlugField(max_length=200, verbose_name='Slug')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts',verbose_name='Author')
+    slug = models.SlugField(max_length=100, unique=True, verbose_name='Slug')
     post_status = models.CharField(max_length=20,default='draft',choices=POST_STATUS_CHOICES, verbose_name='Post Status')
     created = jmodels.jDateTimeField(auto_now_add=True)
     updated = jmodels.jDateTimeField(auto_now=True)
@@ -76,4 +76,4 @@ class Comment(models.Model):
         verbose_name_plural='Comments'
 
     def __str__(self):
-        return self.title + self.author.username
+        return self.post.title
