@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.fields import BooleanField
 from django_jalali.db import models as jmodels
 
 
@@ -23,7 +24,7 @@ class Post(models.Model):
     post_status = models.CharField(max_length=20,default='draft',choices=POST_STATUS_CHOICES, verbose_name='Post Status')
     created = jmodels.jDateTimeField(auto_now_add=True)
     updated = jmodels.jDateTimeField(auto_now=True)
-    selected = models.BooleanField(default=False, verbose_name='Is Selected')
+    selected = BooleanField(default=False, verbose_name='Is Selected')
 
     objects = jmodels.jManager()
     published = PublishedManager()
@@ -60,6 +61,7 @@ class Comment(models.Model):
         ('spam', 'Spam'),
     )
 
+    title = models.CharField(max_length=200)
     content = models.TextField(null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
@@ -74,4 +76,4 @@ class Comment(models.Model):
         verbose_name_plural='Comments'
 
     def __str__(self):
-        return self.post.title
+        return self.title + self.author.username
