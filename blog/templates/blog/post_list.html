@@ -1,28 +1,28 @@
 {% extends 'parent/base.html' %}
 {% load static %}
-
 {% block title %}post_list{% endblock %}
 
 {% block content %}
-      <div style="text-align: center;">
-         <p style="font-size: 16px;color: #444;">post_list</p>
-      </div>
+      <center>
+         <p style="font-size: 16px;color: #444;"> post_list</p>
+      </center>
       <hr>
       <div class="container">
          <div class="row">
 
-           {% for post in posts  %}
-            <div class="col-md-3">
-               <a href="{% url 'blog:post_detail' post.id %}">
+             {% for post in posts %}
+             <div class="col-md-3">
+               <a href="{{ post.get_absolute_url }}">
+               {# <a href="{% url 'blog:post_detail' post.slug %}"> #}
                   <div class="post-content" dir="auto">
                      <figure>
-                        <img src="{% static "img/Django-Projects.jpg" %}" alt="">
+                        <img src="{% static 'img/Django-Projects.jpg' %}">
                         <figcaption class="hover-fig">
                            <i class="fa fa-plus"></i>
                         </figcaption>
                         <figcaption class="date-fig">
-                           <span>{{post.title}}</span>
-                           <i class="fa fa-date"></i>
+                           <span style="display:block;text-align:center">{{post.title}}</span>
+                           <i class="fa fa-d ate"></i>
                         </figcaption>
                      </figure>
                      <p>{{ post.content | truncatewords:3 }}</p>
@@ -30,7 +30,6 @@
                </a>
             </div>
              {% endfor %}
-
 
 
          </div>

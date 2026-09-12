@@ -478,3 +478,285 @@ a,a:hover,a:focus{
 .comment textarea{
 	resize: none;
 }
+
+
+
+/* =========================================
+   PROFILE PAGE
+========================================= */
+
+.profile-page {
+    padding: 30px 0 60px;
+    background: #f7f7f7;
+}
+
+
+/* Profile Header */
+
+.profile-card {
+    background: #fff;
+    min-height: 190px;
+    margin-bottom: 35px;
+    padding: 25px;
+    border: 1px solid #e7e7e7;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-card:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 100%;
+    background: #333;
+}
+
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    margin-left: 30px;
+    flex-shrink: 0;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.profile-info h2 {
+    margin: 0 0 12px;
+    font-size: 25px;
+    color: #333;
+}
+
+
+.profile-info p {
+    color: #777;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+
+
+.profile-create-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.profile-create-btn:hover {
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+}
+
+.profile-create-btn i {
+    margin-left: 7px;
+}
+
+
+/* Sections */
+
+.profile-section {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #e7e7e7;
+}
+
+
+.profile-section-title {
+    border-bottom: 1px solid #eee;
+    padding: 0 0 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.profile-section-title i {
+    margin-left: 8px;
+}
+
+
+.profile-section-title small {
+    font-size: 13px;
+    color: #999;
+}
+
+
+.published-title {
+    color: #3c763d;
+}
+
+
+.rejected-title {
+    color: #a94442;
+}
+
+
+.draft-title {
+    color: #8a6d3b;
+}
+
+
+/* Post Cards */
+
+.profile-post {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+
+.profile-post:hover {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+    transform: translateY(-3px);
+}
+
+
+.profile-post figure {
+    margin: 0;
+    height: 160px;
+    overflow: hidden;
+}
+
+
+.profile-post figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.4s ease;
+}
+
+
+.profile-post:hover figure img {
+    transform: scale(1.05);
+}
+
+
+.profile-post-body {
+    padding: 15px;
+}
+
+
+.profile-post-body h4 {
+    margin: 0 0 10px;
+    font-size: 17px;
+    color: #333;
+    line-height: 1.7;
+}
+
+
+.profile-post-body p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.9;
+    min-height: 48px;
+}
+
+
+.profile-date {
+    display: block;
+    font-size: 12px;
+    color: #999;
+    margin: 12px 0;
+}
+
+
+.profile-date i {
+    margin-left: 5px;
+}
+
+
+.profile-post-link {
+    display: block;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+    color: #555;
+    text-decoration: none;
+}
+
+
+.profile-post-link:hover {
+    color: #111;
+    text-decoration: none;
+}
+
+
+.profile-post-link i {
+    margin-right: 5px;
+}
+
+
+/* Empty State */
+
+.profile-empty {
+    text-align: center;
+    padding: 35px 10px;
+    color: #999;
+}
+
+
+.profile-empty i {
+    display: block;
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+
+.profile-empty p {
+    margin: 0;
+}
+
+
+/* Mobile */
+
+@media (max-width: 767px) {
+
+    .profile-page {
+        padding: 20px 0 40px;
+    }
+
+    .profile-card {
+        display: block;
+        text-align: center;
+        padding: 25px 15px;
+    }
+
+    .profile-image {
+        margin: 0 auto 20px;
+    }
+
+    .profile-info h2 {
+        font-size: 21px;
+    }
+
+    .profile-section {
+        padding: 15px;
+    }
+
+    .profile-section-title {
+        font-size: 16px;
+    }
+
+    .profile-post {
+        margin-bottom: 20px;
+    }
+
+}

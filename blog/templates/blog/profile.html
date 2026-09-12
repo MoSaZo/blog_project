@@ -1,0 +1,361 @@
+{% extends 'parent/base.html' %}
+{% load static %}
+
+{% block title %}پروفایل{% endblock %}
+
+{% block content %}
+
+<div class="profile-page" dir="rtl">
+
+    <div class="container">
+        
+        {# PROFILE HEADER #}
+    
+        <div class="profile-card">
+
+            <div class="profile-info">
+
+                <h2>
+                    خوش آمدید {{ request.user.username }}
+                </h2>
+
+                <p>
+                    به پروفایل شخصی خودتان خوش آمدید.
+                    در این بخش می‌توانید پست‌های خود را مدیریت کنید.
+                </p>
+
+                <a href="{% url 'blog:create_post' %}" class="profile-create-btn">
+                    <i class="fa fa-plus"></i>
+                    ساخت پست جدید
+                </a>
+
+            </div>
+
+        </div>
+
+
+      
+          {# PUBLISHED POSTS #}   
+        
+
+        <div class="profile-section">
+
+            <div class="profile-section-title published-title">
+
+                <span>
+                    <i class="fa fa-check-circle"></i>
+                    پست‌های منتشر شده
+                </span>
+
+                <small>
+                    {{ published_posts|length }} پست
+                </small>
+
+            </div>
+
+
+            {% if published_posts %}
+
+                <div class="row">
+
+                    {% for post in published_posts %}
+
+                        <div class="col-md-4">
+
+                            <div class="profile-post">
+
+                                <figure>
+
+                                    <img src="{% static 'img/Django-Projects.jpg' %}"
+                                         alt="{{ post.title }}">
+
+                                </figure>
+
+
+                                <div class="profile-post-body">
+
+                                    <h4>
+                                        {{ post.title }}
+                                    </h4>
+
+                                    <p>
+                                        {{ post.content|truncatewords:12 }}
+                                    </p>
+
+
+                                    <span class="profile-date">
+                                        <i class="fa fa-calendar-o"></i>
+                                        {{ post.created }}
+                                    </span>
+
+
+                                    <a href="{{ post.get_absolute_url }}"
+                                       class="profile-post-link">
+
+                                        مشاهده پست
+                                        <i class="fa fa-angle-left"></i>
+
+                                    </a>
+
+
+                                    <!-- Edit & Delete -->
+
+                                    <div class="profile-post-actions">
+
+                                        <a href="#"
+                                           class="profile-edit-btn">
+
+                                            <i class="fa fa-pencil"></i>
+                                            ویرایش
+
+                                        </a>
+
+
+                                        <a href="#"
+                                           class="profile-delete-btn">
+
+                                            <i class="fa fa-trash"></i>
+                                            حذف
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="profile-empty">
+
+                    <i class="fa fa-file-text-o"></i>
+
+                    <p>
+                        هنوز پست منتشر شده‌ای ندارید.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+    
+           {#  REJECTED POSTS #}
+  
+
+        <div class="profile-section">
+
+            <div class="profile-section-title rejected-title">
+
+                <span>
+                    <i class="fa fa-times-circle"></i>
+                    پست‌های رد شده
+                </span>
+
+                <small>
+                    {{ rejected_posts|length }} پست
+                </small>
+
+            </div>
+
+
+            {% if rejected_posts %}
+
+                <div class="row">
+
+                    {% for post in rejected_posts %}
+
+                        <div class="col-md-4">
+
+                            <div class="profile-post rejected-post">
+
+                                <figure>
+
+                                    <img src="{% static 'img/Django-Projects.jpg' %}"
+                                         alt="{{ post.title }}">
+
+                                </figure>
+
+
+                                <div class="profile-post-body">
+
+                                    <h4>
+                                        {{ post.title }}
+                                    </h4>
+
+                                    <p>
+                                        {{ post.content|truncatewords:12 }}
+                                    </p>
+
+
+                                    <span class="profile-date">
+                                        <i class="fa fa-calendar-o"></i>
+                                        {{ post.created }}
+                                    </span>
+
+
+                                    <!-- Edit & Delete -->
+
+                                    <div class="profile-post-actions">
+
+                                        <a href="#"
+                                           class="profile-edit-btn">
+
+                                            <i class="fa fa-pencil"></i>
+                                            ویرایش
+
+                                        </a>
+
+
+                                        <a href="#"
+                                           class="profile-delete-btn">
+
+                                            <i class="fa fa-trash"></i>
+                                            حذف
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="profile-empty">
+
+                    <i class="fa fa-check"></i>
+
+                    <p>
+                        پست رد شده‌ای ندارید.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    
+        {# DRAFT POSTS #}
+             
+
+        <div class="profile-section">
+
+            <div class="profile-section-title draft-title">
+
+                <span>
+                    <i class="fa fa-file-text"></i>
+                    پیش‌نویس‌ها
+                </span>
+
+                <small>
+                    {{ draft_posts|length }} پست
+                </small>
+
+            </div>
+
+
+            {% if draft_posts %}
+
+                <div class="row">
+
+                    {% for post in draft_posts %}
+
+                        <div class="col-md-4">
+
+                            <div class="profile-post draft-post">
+
+                                <figure>
+
+                                    <img src="{% static 'img/Django-Projects.jpg' %}"
+                                         alt="{{ post.title }}">
+
+                                </figure>
+
+
+                                <div class="profile-post-body">
+
+                                    <h4>
+                                        {{ post.title }}
+                                    </h4>
+
+                                    <p>
+                                        {{ post.content|truncatewords:12 }}
+                                    </p>
+
+
+                                    <span class="profile-date">
+                                        <i class="fa fa-calendar-o"></i>
+                                        {{ post.created }}
+                                    </span>
+
+
+                                    {# Edit & Delete #}
+
+                                    <div class="profile-post-actions">
+
+                                        <a href="#"
+                                           class="profile-edit-btn">
+
+                                            <i class="fa fa-pencil"></i>
+                                            ویرایش
+
+                                        </a>
+
+
+                                        <a href="#"
+                                           class="profile-delete-btn">
+
+                                            <i class="fa fa-trash"></i>
+                                            حذف
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="profile-empty">
+
+                    <i class="fa fa-pencil"></i>
+
+                    <p>
+                        پیش‌نویسی ندارید.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

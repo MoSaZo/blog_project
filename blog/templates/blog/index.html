@@ -1,9 +1,9 @@
 {% extends 'parent/base.html' %}
-{% load static %}
-{% block title %}index{% endblock %}
+{% load static  %}
+{% block title %}index{% endblock%}
+
 
 {% block content %}
-
       <center>
          <p style="font-size: 16px;color: #444;">آخرین مطالب وبلاگ</p>
       </center>
@@ -95,9 +95,10 @@
                   </div>
                </div>
 
-               {% for post in selected_posts %}
+                {% for post in posts %}
                <div class="col-md-4">
-                  <a href="{% url 'blog:post_detail' post.id %}">
+                   <a href="{{ post.get_absolute_url }}">
+                       {# <a href="{% url 'blog:post_detail' post.slug %}"> #}
                      <div class="post-content" dir="auto">
                         <figure>
                            <img src="{% static 'img/Django-Projects.jpg' %}">
@@ -105,7 +106,7 @@
                               <i class="fa fa-plus"></i>
                            </figcaption>
                            <figcaption class="date-fig">
-                              <span>{{ post.title }}</span>
+                              <span style="display: block; text-align: center">{{ post.title }}</span>
                               <i class="fa fa-date"></i>
                            </figcaption>
                         </figure>
@@ -114,7 +115,6 @@
                   </a>
                </div>
                 {% endfor %}
-
 
             </div>
          </div>

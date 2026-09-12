@@ -20,11 +20,10 @@ class PostAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('post','author','content','created','comment_status')
     list_display_links = ('post',)
-    list_filter = ('comment_status','created','post','author')
-    search_fields = ('author__post__content',)
+    list_filter = (('created',JDateFieldListFilter),'author')
+    search_fields = ('content',)
     ordering = ('-created',)
-    readonly_fields = ('created',)
     date_hierarchy = 'created'
-    list_editable = ('status',)
+    list_editable = ('comment_status',)
 
 admin.site.register(News)

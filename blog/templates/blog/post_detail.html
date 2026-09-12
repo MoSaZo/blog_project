@@ -1,10 +1,9 @@
 {% extends 'parent/base.html' %}
 {% load static %}
+{% load jformat %}
 {% block title %}post_detail{% endblock %}
-
-{% block content %}
-
-      <div style="text-align: center;">خانه / عنوان مطلب</div>
+   {% block content %}
+      <center>post_detail</center>
       <hr>
       <div class="container">
          <div class="row">
@@ -42,53 +41,58 @@
                         <li><a href="#">پیج اینستاگرام</a></li>
                      </ul>
                   </div>
+                  <div class="category-sidebar ads-sidebar">
+                     <span><i class="fa fa-slack"></i>تبلیغات</span>
+                     <ul>
+                        <li>
+                           <a href="#">
+                              <figure>
+                                 <img src="{% static 'img/ads1.jpg' %}" alt="">
+                                 <figcaption></figcaption>
+                              </figure>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="#">
+                              <figure>
+                                 <img src="{% static 'img/ads1.jpg' %}" alt="">
+                                 <figcaption></figcaption>
+                              </figure>
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
                </div>
             </div>
             <div class="col-md-9">
                <div class="col-md-12">
                   <div class="single-content" dir="auto">
                      <div class="single-img">
-                        <img src="{% static 'img/Django-Projects.jpg' %}" alt="">
+                        <img src="{% static 'img/Django-Projects.jpg' %}">
                      </div>
-
                      <div class="single-title">
                         <h1>{{ post.title }}</h1>
                      </div>
                      <p>{{ post.content | linebreaks }}</p>
                       <br><br>
-                      {{ post.created | date:"Y/m/d  H:i:s" }}
+                     <strong> {{ post.created | jformat:'%Y/%m/%d  %H:%M:%S'}} </strong>
                      <hr>
-                     <div class="comment">
-                        <span><i class="fa fa-comments"></i>نظری برای این مطلب بنویسید</span>
-                        <form action="" method="post">
-                           <div class="form-group col-md-6">
-                               <label>
-                                   <input class="form-control" type="text" name="user_name" placeholder="نام خود را وارد کنید" >
-                               </label>
-                           </div>
-                           <div class="form-group col-md-6">
-                               <label>
-                                   <input class="form-control" type="email" name="user_email" placeholder="ایمیل را واردکنید" >
-                               </label>
-                           </div>
-                           <div class="form-group col-md-12">
-                               <label>
-                                   <textarea class="form-control" name="user_comment" placeholder="متن نظر" rows="7"></textarea>
-                               </label>
-                           </div>
-                           <div class="form-group col-md-12">
-                              <button class="btn btn-default" type="submit">ارسال نظر</button>
-                           </div>
-                        </form>
-                     </div>
-                     <div class="comments-note">
+                      <div class="comments-note">
                         نظرات این مطلب
+                       {% for comment in comments %}
+                        <h1> {{ comment.user.username }} </h1>
+                        <h1> {{ comment.body }} </h1>
+                        <h1> {{ comment.created | jformat:"%Y/%m/%d %H:%M:%S" }} </h1>
+                       {% endfor %}
                      </div>
+                      {% if user.is_authenticated %}
+                          {% include 'forms/post_comment.html'  %}
+                      {% else %}
+                          <p> لطفا برای ثبت نظر لاگین کنید </p>
+                      {% endif %}
                   </div>
                </div>
             </div>
          </div>
       </div>
-
-{% endblock %}
-
+   {% endblock %}

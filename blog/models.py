@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.fields import BooleanField
 from django_jalali.db import models as jmodels
+from django.urls import reverse
+from slugify import slugify    #unicode-slugify
 
 
 class PublishedManager(models.Manager):
@@ -28,10 +30,18 @@ class Post(models.Model):
 
     objects = jmodels.jManager()
     published = PublishedManager()
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={'slug': self.slug})
 
     class Meta:
+        ordering = ['-created']
         verbose_name='Post'
         verbose_name_plural='Posts'
+
+    def save(self, *args, **kwargs):
+        self.slug = f"{slugify(self.title)}-{self.id}"
+        return super().save(*args,**kwargs)
+
 
     def __str__(self):
         return self.title
@@ -67,11 +77,14 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     created = models.DateTimeField(auto_now_add=True)
     comment_status = models.CharField(max_length=20, default='pending', choices=COMMENT_STATUS_CHOICES)
+    email = models.EmailField(verbose_name='Email')
+    phone = models.CharField(max_length=11,verbose_name='Phone Number')
 
     objects = jmodels.jManager()
     published = PublishedManager()
 
     class Meta:
+        ordering = ['-created']
         verbose_name='Comment'
         verbose_name_plural='Comments'
 
